@@ -1,6 +1,45 @@
 radio.onReceivedNumber(function (receivedNumber) {
     ChooseReceived = receivedNumber
+    soundExpression.mysterious.play()
+    basic.pause(100)
 })
+function showWait () {
+    basic.showLeds(`
+        . . . . .
+        . . . . .
+        # . . . .
+        . . . . .
+        . . . . .
+        `)
+    basic.showLeds(`
+        . . . . .
+        . . . . .
+        # # . . .
+        . . . . .
+        . . . . .
+        `)
+    basic.showLeds(`
+        . . . . .
+        . . . . .
+        # # # . .
+        . . . . .
+        . . . . .
+        `)
+    basic.showLeds(`
+        . . . . .
+        . . . . .
+        # # # # .
+        . . . . .
+        . . . . .
+        `)
+    basic.showLeds(`
+        . . . . .
+        . . . . .
+        # # # # #
+        . . . . .
+        . . . . .
+        `)
+}
 input.onButtonPressed(Button.A, function () {
     if (State == "Init" || State == "Chosen") {
         Choose = 5
@@ -23,6 +62,11 @@ input.onButtonPressed(Button.AB, function () {
         State = "Chosen"
     }
 })
+function initVar () {
+    State = "Init"
+    Choose = -1
+    ChooseReceived = -1
+}
 input.onButtonPressed(Button.B, function () {
     if (State == "Init" || State == "Chosen") {
         Choose = 2
@@ -30,22 +74,26 @@ input.onButtonPressed(Button.B, function () {
         State = "Chosen"
     }
 })
-let Result = ""
+let State = ""
 let ChooseReceived = 0
 let Choose = 0
-let State = ""
-State = "Init"
-Choose = -1
-ChooseReceived = -1
+initVar()
 music.setVolume(127)
 radio.setGroup(58)
+basic.pause(200)
+radio.sendNumber(Choose)
 basic.showIcon(IconNames.Heart)
 basic.forever(function () {
     if (State == "Send") {
-        basic.showIcon(IconNames.Diamond)
-        basic.pause(200)
-        basic.showIcon(IconNames.SmallDiamond)
-        basic.pause(200)
+        showWait()
+        if (Choose == 5) {
+            basic.showIcon(IconNames.Square)
+        } else if (Choose == 2) {
+            basic.showIcon(IconNames.Scissors)
+        } else {
+            basic.showIcon(IconNames.SmallSquare)
+        }
+        basic.pause(50)
         if (ChooseReceived >= 0) {
             if (Choose == ChooseReceived) {
                 basic.showIcon(IconNames.Asleep)
@@ -57,10 +105,7 @@ basic.forever(function () {
                 basic.showIcon(IconNames.Sad)
                 soundExpression.sad.play()
             }
-            State = "Init"
-            Result = ""
-            Choose = -1
-            ChooseReceived = -1
+            initVar()
         }
     }
 })
