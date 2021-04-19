@@ -85,6 +85,7 @@ State = ""
 ChooseReceived = 0
 Choose = 0
 initVar()
+winCount = 0
 music.set_volume(127)
 radio.set_group(58)
 basic.pause(200)
@@ -92,6 +93,7 @@ radio.send_number(Choose)
 basic.show_icon(IconNames.HEART)
 
 def on_forever():
+    global winCount
     if State == "Send":
         showWait()
         if Choose == 5:
@@ -106,10 +108,13 @@ def on_forever():
                 basic.show_icon(IconNames.ASLEEP)
                 soundExpression.yawn.play()
             elif Choose == 5 and ChooseReceived == 0 or Choose == 2 and ChooseReceived == 5 or Choose == 0 and ChooseReceived == 2:
+                winCount += 1
                 basic.show_icon(IconNames.HAPPY)
                 soundExpression.giggle.play()
             else:
                 basic.show_icon(IconNames.SAD)
                 soundExpression.sad.play()
             initVar()
+    elif State == "Init":
+        basic.show_icon(IconNames.ASLEEP)
 basic.forever(on_forever)

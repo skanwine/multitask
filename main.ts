@@ -55,6 +55,11 @@ input.onGesture(Gesture.Shake, function () {
         basic.pause(100)
     }
 })
+input.onLogoEvent(TouchButtonEvent.Pressed, function () {
+    if (State == "Init") {
+        basic.showNumber(winCount)
+    }
+})
 input.onButtonPressed(Button.AB, function () {
     if (State == "Init" || State == "Chosen") {
         Choose = 0
@@ -77,7 +82,10 @@ input.onButtonPressed(Button.B, function () {
 let State = ""
 let ChooseReceived = 0
 let Choose = 0
+let winCount = 0
 initVar()
+winCount = 0
+let darkToken = 0
 music.setVolume(127)
 radio.setGroup(58)
 basic.pause(200)
@@ -99,6 +107,7 @@ basic.forever(function () {
                 basic.showIcon(IconNames.Asleep)
                 soundExpression.yawn.play()
             } else if (Choose == 5 && ChooseReceived == 0 || Choose == 2 && ChooseReceived == 5 || Choose == 0 && ChooseReceived == 2) {
+                winCount += 1
                 basic.showIcon(IconNames.Happy)
                 soundExpression.giggle.play()
             } else {
