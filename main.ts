@@ -6,6 +6,7 @@ input.onButtonPressed(Button.A, function () {
         Choose = 5
         basic.showIcon(IconNames.Square)
         State = "Chosen"
+        music.startMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)
     }
 })
 input.onButtonPressed(Button.AB, function () {
@@ -23,9 +24,10 @@ input.onButtonPressed(Button.B, function () {
     }
 })
 input.onGesture(Gesture.Shake, function () {
-    if (State == "Chosen") {
-        radio.sendNumber(Choose)
+    if (State == "Chosen" || State == "Send") {
         State = "Send"
+        music.startMelody(music.builtInMelody(Melodies.Dadadadum), MelodyOptions.Once)
+        radio.sendNumber(Choose)
     }
 })
 let Result = ""

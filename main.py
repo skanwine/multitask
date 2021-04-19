@@ -9,6 +9,8 @@ def on_button_pressed_a():
         Choose = 5
         basic.show_icon(IconNames.SQUARE)
         State = "Chosen"
+        music.start_melody(music.built_in_melody(Melodies.DADADADUM),
+            MelodyOptions.ONCE)
 input.on_button_pressed(Button.A, on_button_pressed_a)
 
 def on_button_pressed_ab():
@@ -29,9 +31,10 @@ input.on_button_pressed(Button.B, on_button_pressed_b)
 
 def on_gesture_shake():
     global State
-    if State == "Chosen":
-        radio.send_number(Choose)
+    if State == "Chosen" or State == "Send":
         State = "Send"
+        music.start_melody(music.built_in_melody(Melodies.DADADADUM),
+            MelodyOptions.ONCE)
 input.on_gesture(Gesture.SHAKE, on_gesture_shake)
 
 Result = ""
