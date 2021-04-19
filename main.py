@@ -59,6 +59,11 @@ def on_gesture_shake():
         basic.pause(100)
 input.on_gesture(Gesture.SHAKE, on_gesture_shake)
 
+def on_logo_pressed():
+    if State == "Init":
+        basic.show_number(winCount)
+input.on_logo_event(TouchButtonEvent.PRESSED, on_logo_pressed)
+
 def on_button_pressed_ab():
     global Choose, State
     if State == "Init" or State == "Chosen":
@@ -84,6 +89,7 @@ input.on_button_pressed(Button.B, on_button_pressed_b)
 State = ""
 ChooseReceived = 0
 Choose = 0
+winCount = 0
 initVar()
 winCount = 0
 music.set_volume(127)
@@ -115,6 +121,4 @@ def on_forever():
                 basic.show_icon(IconNames.SAD)
                 soundExpression.sad.play()
             initVar()
-    elif State == "Init":
-        basic.show_icon(IconNames.ASLEEP)
 basic.forever(on_forever)

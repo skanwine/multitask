@@ -7,35 +7,21 @@ function showWait () {
     basic.showLeds(`
         . . . . .
         . . . . .
-        # . . . .
+        . # . . .
         . . . . .
         . . . . .
         `)
     basic.showLeds(`
         . . . . .
         . . . . .
-        # # . . .
+        . # # . .
         . . . . .
         . . . . .
         `)
     basic.showLeds(`
         . . . . .
         . . . . .
-        # # # . .
-        . . . . .
-        . . . . .
-        `)
-    basic.showLeds(`
-        . . . . .
-        . . . . .
-        # # # # .
-        . . . . .
-        . . . . .
-        `)
-    basic.showLeds(`
-        . . . . .
-        . . . . .
-        # # # # #
+        . # # # .
         . . . . .
         . . . . .
         `)
@@ -85,7 +71,6 @@ let Choose = 0
 let winCount = 0
 initVar()
 winCount = 0
-let darkToken = 0
 music.setVolume(127)
 radio.setGroup(58)
 basic.pause(200)
