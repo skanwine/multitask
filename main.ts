@@ -33,9 +33,18 @@ radio.onReceivedNumber(function on_received_number(receivedNumber: number) {
 input.onLogoEvent(TouchButtonEvent.LongPressed, function on_logo_long_pressed() {
     
     if (State == "Init" || State == "Chosen") {
-        Choose = 10
         basic.showIcon(IconNames.Pitchfork)
-        State = "Chosen"
+        basic.pause(100)
+        basic.showNumber(trumpQuota)
+        basic.pause(100)
+        if (trumpQuota > 0) {
+            basic.showIcon(IconNames.Pitchfork)
+            Choose = 10
+            State = "Chosen"
+        } else {
+            basic.showIcon(IconNames.No)
+        }
+        
     }
     
 })
@@ -159,7 +168,10 @@ basic.forever(function on_forever() {
                 soundExpression.giggle.play()
             } else if (winLossDraw == "Loss") {
                 lossCount += 1
-                trumpQuota += 1
+                if (lossCount % 3 == 0) {
+                    trumpQuota += 1
+                }
+                
                 basic.showIcon(IconNames.Sad)
                 soundExpression.sad.play()
             } else if (winLossDraw == "Draw") {

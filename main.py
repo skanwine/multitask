@@ -29,9 +29,16 @@ radio.on_received_number(on_received_number)
 def on_logo_long_pressed():
     global Choose, State
     if State == "Init" or State == "Chosen":
-        Choose = 10
         basic.show_icon(IconNames.PITCHFORK)
-        State = "Chosen"
+        basic.pause(100)
+        basic.show_number(trumpQuota)
+        basic.pause(100)
+        if trumpQuota > 0:
+            basic.show_icon(IconNames.PITCHFORK)
+            Choose = 10
+            State = "Chosen"
+        else:
+            basic.show_icon(IconNames.NO)
 input.on_logo_event(TouchButtonEvent.LONG_PRESSED, on_logo_long_pressed)
 
 def showWait():
@@ -142,7 +149,8 @@ def on_forever():
                 soundExpression.giggle.play()
             elif winLossDraw == "Loss":
                 lossCount += 1
-                trumpQuota += 1
+                if lossCount % 3 == 0:
+                    trumpQuota += 1
                 basic.show_icon(IconNames.SAD)
                 soundExpression.sad.play()
             elif winLossDraw == "Draw":
