@@ -188,8 +188,8 @@ basic.forever(function on_forever() {
                 
                 if (ChooseReceived == TRUMP_WIN) {
                     basic.showIcon(IconNames.Sad)
-                    basic.pause(100)
                     basic.showIcon(IconNames.Pitchfork)
+                    basic.pause(200)
                 }
                 
                 basic.showIcon(IconNames.Sad)
@@ -201,8 +201,8 @@ basic.forever(function on_forever() {
                 
                 if (ChooseReceived == TRUMP_DRAW) {
                     basic.showIcon(IconNames.Asleep)
-                    basic.pause(100)
                     basic.showIcon(IconNames.Pitchfork)
+                    basic.pause(200)
                 }
                 
                 basic.showIcon(IconNames.Asleep)

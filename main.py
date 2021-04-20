@@ -167,8 +167,8 @@ def on_forever():
                     trumpQuota += 1
                 if ChooseReceived == TRUMP_WIN:
                     basic.show_icon(IconNames.SAD)
-                    basic.pause(100)
                     basic.show_icon(IconNames.PITCHFORK)
+                    basic.pause(200)
                 basic.show_icon(IconNames.SAD)
                 soundExpression.sad.play()
             elif winLossDraw == "Draw":
@@ -176,8 +176,8 @@ def on_forever():
                     radio.send_number(TRUMP_DRAW)
                 if ChooseReceived == TRUMP_DRAW:
                     basic.show_icon(IconNames.ASLEEP)
-                    basic.pause(100)
                     basic.show_icon(IconNames.PITCHFORK)
+                    basic.pause(200)
                 basic.show_icon(IconNames.ASLEEP)
                 soundExpression.yawn.play()
             if winLossDraw != "Wait":
