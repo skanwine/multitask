@@ -86,7 +86,7 @@ input.onGesture(Gesture.Shake, function on_gesture_shake() {
     if (State == "Chosen" || State == "Send") {
         State = "Send"
         radio.sendNumber(Choose)
-        soundExpression.hello.play()
+        //        soundExpression.hello.play()
         basic.pause(100)
     }
     
@@ -188,7 +188,7 @@ basic.forever(function on_forever() {
                 
                 if (ChooseReceived == TRUMP_WIN) {
                     basic.showIcon(IconNames.Sad)
-                    basic.pause(200)
+                    basic.pause(100)
                     basic.showIcon(IconNames.Pitchfork)
                 }
                 
@@ -201,7 +201,7 @@ basic.forever(function on_forever() {
                 
                 if (ChooseReceived == TRUMP_DRAW) {
                     basic.showIcon(IconNames.Asleep)
-                    basic.pause(200)
+                    basic.pause(100)
                     basic.showIcon(IconNames.Pitchfork)
                 }
                 

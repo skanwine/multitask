@@ -77,7 +77,7 @@ def on_gesture_shake():
     if State == "Chosen" or State == "Send":
         State = "Send"
         radio.send_number(Choose)
-        soundExpression.hello.play()
+ #       soundExpression.hello.play()
         basic.pause(100)
 input.on_gesture(Gesture.SHAKE, on_gesture_shake)
 
@@ -167,7 +167,7 @@ def on_forever():
                     trumpQuota += 1
                 if ChooseReceived == TRUMP_WIN:
                     basic.show_icon(IconNames.SAD)
-                    basic.pause(200)
+                    basic.pause(100)
                     basic.show_icon(IconNames.PITCHFORK)
                 basic.show_icon(IconNames.SAD)
                 soundExpression.sad.play()
@@ -176,7 +176,7 @@ def on_forever():
                     radio.send_number(TRUMP_DRAW)
                 if ChooseReceived == TRUMP_DRAW:
                     basic.show_icon(IconNames.ASLEEP)
-                    basic.pause(200)
+                    basic.pause(100)
                     basic.show_icon(IconNames.PITCHFORK)
                 basic.show_icon(IconNames.ASLEEP)
                 soundExpression.yawn.play()
