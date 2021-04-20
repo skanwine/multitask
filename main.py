@@ -1,43 +1,58 @@
+def determineWinLossDraw():
+    global result
+    if Choose == ChooseReceived:
+        result = "Draw"
+    elif ChooseReceived == 10:
+        result = "Wait"
+    elif ChooseReceived == 88:
+        result = "Loss"
+    elif ChooseReceived == 55:
+        result = "Draw"
+    elif Choose == 10:
+        if Math.random_boolean():
+            result = "Win"
+        else:
+            result = "Draw"
+    elif Choose == 5 and ChooseReceived == 0 or Choose == 2 and ChooseReceived == 5 or Choose == 0 and ChooseReceived == 2:
+        result = "Win"
+    else:
+        result = "Loss"
+    return result
+
 def on_received_number(receivedNumber):
     global ChooseReceived
     ChooseReceived = receivedNumber
     soundExpression.mysterious.play()
-    basic.pause(100)
+    basic.pause(200)
 radio.on_received_number(on_received_number)
+
+def on_logo_long_pressed():
+    global Choose, State
+    if State == "Init" or State == "Chosen":
+        Choose = 10
+        basic.show_icon(IconNames.PITCHFORK)
+        State = "Chosen"
+input.on_logo_event(TouchButtonEvent.LONG_PRESSED, on_logo_long_pressed)
 
 def showWait():
     basic.show_leds("""
         . . . . .
         . . . . .
-        # . . . .
+        . # . . .
         . . . . .
         . . . . .
         """)
     basic.show_leds("""
         . . . . .
         . . . . .
-        # # . . .
+        . # # . .
         . . . . .
         . . . . .
         """)
     basic.show_leds("""
         . . . . .
         . . . . .
-        # # # . .
-        . . . . .
-        . . . . .
-        """)
-    basic.show_leds("""
-        . . . . .
-        . . . . .
-        # # # # .
-        . . . . .
-        . . . . .
-        """)
-    basic.show_leds("""
-        . . . . .
-        . . . . .
-        # # # # #
+        . # # # .
         . . . . .
         . . . . .
         """)
@@ -86,7 +101,11 @@ def on_button_pressed_b():
         State = "Chosen"
 input.on_button_pressed(Button.B, on_button_pressed_b)
 
+lossCount = 0
+winLossDraw = ""
+trumpQuota = 0
 State = ""
+result = ""
 ChooseReceived = 0
 Choose = 0
 winCount = 0
@@ -99,26 +118,38 @@ radio.send_number(Choose)
 basic.show_icon(IconNames.HEART)
 
 def on_forever():
-    global winCount
+    global trumpQuota, winLossDraw, winCount, lossCount
     if State == "Send":
         showWait()
         if Choose == 5:
             basic.show_icon(IconNames.SQUARE)
         elif Choose == 2:
             basic.show_icon(IconNames.SCISSORS)
-        else:
+        elif Choose == 0:
             basic.show_icon(IconNames.SMALL_SQUARE)
+        else:
+            basic.show_icon(IconNames.PITCHFORK)
         basic.pause(50)
         if ChooseReceived >= 0:
-            if Choose == ChooseReceived:
-                basic.show_icon(IconNames.ASLEEP)
-                soundExpression.yawn.play()
-            elif Choose == 5 and ChooseReceived == 0 or Choose == 2 and ChooseReceived == 5 or Choose == 0 and ChooseReceived == 2:
+            if Choose == 10:
+                trumpQuota += -1
+            winLossDraw = determineWinLossDraw()
+            if winLossDraw == "Win":
                 winCount += 1
+                if Choose == 10:
+                    radio.send_number(88)
                 basic.show_icon(IconNames.HAPPY)
                 soundExpression.giggle.play()
-            else:
+            elif winLossDraw == "Loss":
+                lossCount += 1
+                trumpQuota += 1
                 basic.show_icon(IconNames.SAD)
                 soundExpression.sad.play()
-            initVar()
+            elif winLossDraw == "Draw":
+                if Choose == 10:
+                    radio.send_number(55)
+                basic.show_icon(IconNames.ASLEEP)
+                soundExpression.yawn.play()
+            if winLossDraw != "Wait":
+                initVar()
 basic.forever(on_forever)
