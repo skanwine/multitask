@@ -104,16 +104,16 @@ input.onButtonPressed(Button.B, function () {
 })
 let lossCount = 0
 let winLossDraw = ""
-let trumpQuota = 0
 let State = ""
 let result = ""
-let ROCK = 0
 let ChooseReceived = 0
+let trumpQuota = 0
 let TRUMP_DRAW = 0
 let TRUMP_WIN = 0
 let TRUMP = 0
 let SCISSORS = 0
 let PAPER = 0
+let ROCK = 0
 let Choose = 0
 let winCount = 0
 initVar()
@@ -124,11 +124,13 @@ basic.pause(200)
 radio.sendNumber(Choose)
 basic.showIcon(IconNames.Heart)
 let TRUMP_FEQ = 3
+ROCK = 0
 PAPER = 5
 SCISSORS = 2
 TRUMP = 10
 TRUMP_WIN = 88
 TRUMP_DRAW = 55
+trumpQuota = 1
 basic.forever(function () {
     if (State == "Send") {
         showWait()
@@ -159,11 +161,21 @@ basic.forever(function () {
                 if (lossCount % TRUMP_FEQ == 0) {
                     trumpQuota += 1
                 }
+                if (ChooseReceived == TRUMP_WIN) {
+                    basic.showIcon(IconNames.Sad)
+                    basic.pause(200)
+                    basic.showIcon(IconNames.Pitchfork)
+                }
                 basic.showIcon(IconNames.Sad)
                 soundExpression.sad.play()
             } else if (winLossDraw == "Draw") {
                 if (Choose == TRUMP) {
                     radio.sendNumber(TRUMP_DRAW)
+                }
+                if (ChooseReceived == TRUMP_DRAW) {
+                    basic.showIcon(IconNames.Asleep)
+                    basic.pause(200)
+                    basic.showIcon(IconNames.Pitchfork)
                 }
                 basic.showIcon(IconNames.Asleep)
                 soundExpression.yawn.play()

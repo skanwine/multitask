@@ -110,10 +110,16 @@ input.on_button_pressed(Button.B, on_button_pressed_b)
 
 lossCount = 0
 winLossDraw = ""
-trumpQuota = 0
 State = ""
 result = ""
 ChooseReceived = 0
+trumpQuota = 0
+TRUMP_DRAW = 0
+TRUMP_WIN = 0
+TRUMP = 0
+SCISSORS = 0
+PAPER = 0
+ROCK = 0
 Choose = 0
 winCount = 0
 initVar()
@@ -130,6 +136,7 @@ SCISSORS = 2
 TRUMP = 10
 TRUMP_WIN = 88
 TRUMP_DRAW = 55
+trumpQuota = 1
 
 def on_forever():
     global trumpQuota, winLossDraw, winCount, lossCount
@@ -158,11 +165,19 @@ def on_forever():
                 lossCount += 1
                 if lossCount % TRUMP_FEQ == 0:
                     trumpQuota += 1
+                if ChooseReceived == TRUMP_WIN:
+                    basic.show_icon(IconNames.SAD)
+                    basic.pause(200)
+                    basic.show_icon(IconNames.PITCHFORK)
                 basic.show_icon(IconNames.SAD)
                 soundExpression.sad.play()
             elif winLossDraw == "Draw":
                 if Choose == TRUMP:
                     radio.send_number(TRUMP_DRAW)
+                if ChooseReceived == TRUMP_DRAW:
+                    basic.show_icon(IconNames.ASLEEP)
+                    basic.pause(200)
+                    basic.show_icon(IconNames.PITCHFORK)
                 basic.show_icon(IconNames.ASLEEP)
                 soundExpression.yawn.play()
             if winLossDraw != "Wait":
