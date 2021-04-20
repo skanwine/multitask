@@ -1,4 +1,5 @@
-function determineWinLossDraw () {
+function determineWinLossDraw(): string {
+    
     if (Choose == ChooseReceived) {
         result = "Draw"
     } else if (ChooseReceived == TRUMP) {
@@ -13,19 +14,24 @@ function determineWinLossDraw () {
         } else {
             result = "Draw"
         }
+        
     } else if (Choose == PAPER && ChooseReceived == ROCK || Choose == SCISSORS && ChooseReceived == PAPER || Choose == ROCK && ChooseReceived == SCISSORS) {
         result = "Win"
     } else {
         result = "Loss"
     }
+    
     return result
 }
-radio.onReceivedNumber(function (receivedNumber) {
+
+radio.onReceivedNumber(function on_received_number(receivedNumber: number) {
+    
     ChooseReceived = receivedNumber
-    soundExpression.mysterious.play()
+    //     soundExpression.mysterious.play()
     basic.pause(200)
 })
-input.onLogoEvent(TouchButtonEvent.LongPressed, function () {
+input.onLogoEvent(TouchButtonEvent.LongPressed, function on_logo_long_pressed() {
+    
     if (State == "Init" || State == "Chosen") {
         basic.showIcon(IconNames.Pitchfork)
         basic.pause(100)
@@ -38,9 +44,11 @@ input.onLogoEvent(TouchButtonEvent.LongPressed, function () {
         } else {
             basic.showIcon(IconNames.No)
         }
+        
     }
+    
 })
-function showWait () {
+function showWait() {
     basic.showLeds(`
         . . . . .
         . . . . .
@@ -63,44 +71,56 @@ function showWait () {
         . . . . .
         `)
 }
-input.onButtonPressed(Button.A, function () {
+
+input.onButtonPressed(Button.A, function on_button_pressed_a() {
+    
     if (State == "Init" || State == "Chosen") {
         Choose = PAPER
         basic.showIcon(IconNames.Square)
         State = "Chosen"
     }
+    
 })
-input.onGesture(Gesture.Shake, function () {
+input.onGesture(Gesture.Shake, function on_gesture_shake() {
+    
     if (State == "Chosen" || State == "Send") {
         State = "Send"
         radio.sendNumber(Choose)
         soundExpression.hello.play()
         basic.pause(100)
     }
+    
 })
-input.onLogoEvent(TouchButtonEvent.Pressed, function () {
+input.onLogoEvent(TouchButtonEvent.Pressed, function on_logo_pressed() {
     if (State == "Init") {
         basic.showNumber(winCount)
     }
+    
 })
-input.onButtonPressed(Button.AB, function () {
+input.onButtonPressed(Button.AB, function on_button_pressed_ab() {
+    
     if (State == "Init" || State == "Chosen") {
         Choose = ROCK
         basic.showIcon(IconNames.SmallSquare)
         State = "Chosen"
     }
+    
 })
-function initVar () {
+function initVar() {
+    
     State = "Init"
     Choose = -1
     ChooseReceived = -1
 }
-input.onButtonPressed(Button.B, function () {
+
+input.onButtonPressed(Button.B, function on_button_pressed_b() {
+    
     if (State == "Init" || State == "Chosen") {
         Choose = SCISSORS
         basic.showIcon(IconNames.Scissors)
         State = "Chosen"
     }
+    
 })
 let lossCount = 0
 let winLossDraw = ""
@@ -131,7 +151,8 @@ TRUMP = 10
 TRUMP_WIN = 88
 TRUMP_DRAW = 55
 trumpQuota = 1
-basic.forever(function () {
+basic.forever(function on_forever() {
+    
     if (State == "Send") {
         showWait()
         if (Choose == PAPER) {
@@ -143,17 +164,20 @@ basic.forever(function () {
         } else {
             basic.showIcon(IconNames.Pitchfork)
         }
+        
         basic.pause(50)
         if (ChooseReceived >= 0) {
             if (Choose == TRUMP) {
                 trumpQuota += -1
             }
+            
             winLossDraw = determineWinLossDraw()
             if (winLossDraw == "Win") {
                 winCount += 1
                 if (Choose == TRUMP) {
                     radio.sendNumber(TRUMP_WIN)
                 }
+                
                 basic.showIcon(IconNames.Happy)
                 soundExpression.giggle.play()
             } else if (winLossDraw == "Loss") {
@@ -161,28 +185,36 @@ basic.forever(function () {
                 if (lossCount % TRUMP_FEQ == 0) {
                     trumpQuota += 1
                 }
+                
                 if (ChooseReceived == TRUMP_WIN) {
                     basic.showIcon(IconNames.Sad)
                     basic.pause(200)
                     basic.showIcon(IconNames.Pitchfork)
                 }
+                
                 basic.showIcon(IconNames.Sad)
                 soundExpression.sad.play()
             } else if (winLossDraw == "Draw") {
                 if (Choose == TRUMP) {
                     radio.sendNumber(TRUMP_DRAW)
                 }
+                
                 if (ChooseReceived == TRUMP_DRAW) {
                     basic.showIcon(IconNames.Asleep)
                     basic.pause(200)
                     basic.showIcon(IconNames.Pitchfork)
                 }
+                
                 basic.showIcon(IconNames.Asleep)
                 soundExpression.yawn.play()
             }
+            
             if (winLossDraw != "Wait") {
                 initVar()
             }
+            
         }
+        
     }
+    
 })

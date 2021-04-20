@@ -22,7 +22,7 @@ def determineWinLossDraw():
 def on_received_number(receivedNumber):
     global ChooseReceived
     ChooseReceived = receivedNumber
-    soundExpression.mysterious.play()
+#    soundExpression.mysterious.play()
     basic.pause(200)
 radio.on_received_number(on_received_number)
 
