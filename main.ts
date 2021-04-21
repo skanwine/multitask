@@ -27,7 +27,7 @@ function determineWinLossDraw(): string {
 radio.onReceivedNumber(function on_received_number(receivedNumber: number) {
     
     ChooseReceived = receivedNumber
-    //     soundExpression.mysterious.play()
+    //  soundExpression.mysterious.play()
     basic.pause(200)
 })
 input.onLogoEvent(TouchButtonEvent.LongPressed, function on_logo_long_pressed() {
@@ -86,7 +86,7 @@ input.onGesture(Gesture.Shake, function on_gesture_shake() {
     if (State == "Chosen" || State == "Send") {
         State = "Send"
         radio.sendNumber(Choose)
-        //        soundExpression.hello.play()
+        //  soundExpression.hello.play()
         basic.pause(100)
     }
     
@@ -127,6 +127,8 @@ let winLossDraw = ""
 let State = ""
 let result = ""
 let ChooseReceived = 0
+let Choose = 0
+let winCount = 0
 let trumpQuota = 0
 let TRUMP_DRAW = 0
 let TRUMP_WIN = 0
@@ -134,15 +136,6 @@ let TRUMP = 0
 let SCISSORS = 0
 let PAPER = 0
 let ROCK = 0
-let Choose = 0
-let winCount = 0
-initVar()
-winCount = 0
-music.setVolume(127)
-radio.setGroup(58)
-basic.pause(200)
-radio.sendNumber(Choose)
-basic.showIcon(IconNames.Heart)
 let TRUMP_FEQ = 3
 ROCK = 0
 PAPER = 5
@@ -151,6 +144,13 @@ TRUMP = 10
 TRUMP_WIN = 88
 TRUMP_DRAW = 55
 trumpQuota = 1
+winCount = 0
+music.setVolume(127)
+radio.setGroup(58)
+initVar()
+basic.pause(200)
+radio.sendNumber(Choose)
+basic.showIcon(IconNames.Heart)
 basic.forever(function on_forever() {
     
     if (State == "Send") {
