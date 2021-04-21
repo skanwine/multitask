@@ -22,7 +22,6 @@ def determineWinLossDraw():
 def on_received_number(receivedNumber):
     global ChooseReceived
     ChooseReceived = receivedNumber
-    # soundExpression.mysterious.play()
     basic.pause(200)
 radio.on_received_number(on_received_number)
 
@@ -77,7 +76,6 @@ def on_gesture_shake():
     if State == "Chosen" or State == "Send":
         State = "Send"
         radio.send_number(Choose)
-        # soundExpression.hello.play()
         basic.pause(100)
 input.on_gesture(Gesture.SHAKE, on_gesture_shake)
 
@@ -160,7 +158,6 @@ def on_forever():
                 if Choose == TRUMP:
                     radio.send_number(TRUMP_WIN)
                 basic.show_icon(IconNames.HAPPY)
-                soundExpression.giggle.play()
             elif winLossDraw == "Loss":
                 lossCount += 1
                 if lossCount % TRUMP_FEQ == 0:
@@ -170,7 +167,6 @@ def on_forever():
                     basic.show_icon(IconNames.PITCHFORK)
                     basic.pause(200)
                 basic.show_icon(IconNames.SAD)
-                soundExpression.sad.play()
             elif winLossDraw == "Draw":
                 if Choose == TRUMP:
                     radio.send_number(TRUMP_DRAW)
@@ -179,7 +175,6 @@ def on_forever():
                     basic.show_icon(IconNames.PITCHFORK)
                     basic.pause(200)
                 basic.show_icon(IconNames.ASLEEP)
-                soundExpression.yawn.play()
             if winLossDraw != "Wait":
                 initVar()
 basic.forever(on_forever)

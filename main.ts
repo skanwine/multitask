@@ -27,7 +27,6 @@ function determineWinLossDraw(): string {
 radio.onReceivedNumber(function on_received_number(receivedNumber: number) {
     
     ChooseReceived = receivedNumber
-    //  soundExpression.mysterious.play()
     basic.pause(200)
 })
 input.onLogoEvent(TouchButtonEvent.LongPressed, function on_logo_long_pressed() {
@@ -86,7 +85,6 @@ input.onGesture(Gesture.Shake, function on_gesture_shake() {
     if (State == "Chosen" || State == "Send") {
         State = "Send"
         radio.sendNumber(Choose)
-        //  soundExpression.hello.play()
         basic.pause(100)
     }
     
@@ -179,7 +177,6 @@ basic.forever(function on_forever() {
                 }
                 
                 basic.showIcon(IconNames.Happy)
-                soundExpression.giggle.play()
             } else if (winLossDraw == "Loss") {
                 lossCount += 1
                 if (lossCount % TRUMP_FEQ == 0) {
@@ -193,7 +190,6 @@ basic.forever(function on_forever() {
                 }
                 
                 basic.showIcon(IconNames.Sad)
-                soundExpression.sad.play()
             } else if (winLossDraw == "Draw") {
                 if (Choose == TRUMP) {
                     radio.sendNumber(TRUMP_DRAW)
@@ -206,7 +202,6 @@ basic.forever(function on_forever() {
                 }
                 
                 basic.showIcon(IconNames.Asleep)
-                soundExpression.yawn.play()
             }
             
             if (winLossDraw != "Wait") {
